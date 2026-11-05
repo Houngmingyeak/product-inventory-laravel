@@ -1,19 +1,32 @@
 import { useEffect, useState } from 'react'
-import axios from 'axios'
 
 function App() {
   const [data, setData] = useState(null)
   const [error, setError] = useState('')
 
   useEffect(() => {
-    axios
-      .get('/api/ping')
-      .then((response) => {
-        setData(response.data)
-      })
-      .catch(() => {
+    async function loadPing() {
+      try {
+        const response = await fetch('/api/ping', {
+          headers: {
+            Accept: 'application/json',
+          },
+        })
+
+        // fetch មិន throw error ពេល status 404/500 ដូច្នេះត្រូវពិនិត្យ response.ok ខ្លួនឯង
+        if (!response.ok) {
+          setError('Laravel API returned status ' + response.status)
+          return
+        }
+
+        const result = await response.json()
+        setData(result)
+      } catch (err) {
         setError('Cannot connect to Laravel API')
-      })
+      }
+    }
+
+    loadPing()
   }, [])
 
   return (
