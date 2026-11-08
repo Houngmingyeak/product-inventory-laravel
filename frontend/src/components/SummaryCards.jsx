@@ -23,34 +23,80 @@ function SummaryCards({ products }) {
   totalValue = Math.round(totalValue * 100) / 100
 
   return (
-    <div className="mb-6 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-      {/* Total Products */}
-      <div className="rounded-2xl border border-white/70 bg-white/60 p-5 shadow-lg backdrop-blur-xl">
-        <p className="text-sm font-medium text-slate-500">Total Products</p>
-        <p className="mt-2 text-3xl font-bold text-slate-800">{totalProducts}</p>
+    <div className="mb-8 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
+      {/* 1. Total Products */}
+      <div className="group relative overflow-hidden rounded-3xl border border-slate-200/80 bg-white/80 p-6 shadow-sm backdrop-blur-xl transition-all duration-200 hover:-translate-y-1 hover:border-indigo-300 hover:shadow-lg hover:shadow-indigo-500/10">
+        <div className="flex items-center justify-between">
+          <p className="text-[18px] font-semibold text-slate-600">Total Products</p>
+          <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-indigo-50 text-indigo-600 ring-1 ring-indigo-500/20 transition-transform duration-200 group-hover:scale-110">
+            <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
+            </svg>
+          </div>
+        </div>
+        <p className="mt-3 text-3xl font-black tracking-tight text-slate-900 sm:text-4xl">
+          {totalProducts}
+        </p>
+        <p className="mt-2 text-[18px] font-medium text-slate-500">
+          Catalog items listed
+        </p>
       </div>
 
-      {/* Total Value */}
-      <div className="rounded-2xl border border-blue-100 bg-blue-50/60 p-5 shadow-lg backdrop-blur-xl">
-        <p className="text-sm font-medium text-blue-600">Total Value</p>
-        <p className="mt-2 text-3xl font-bold text-blue-600">
+      {/* 2. Total Value */}
+      <div className="group relative overflow-hidden rounded-3xl border border-emerald-200/80 bg-gradient-to-br from-white/90 via-emerald-50/40 to-white/80 p-6 shadow-sm backdrop-blur-xl transition-all duration-200 hover:-translate-y-1 hover:border-emerald-400 hover:shadow-lg hover:shadow-emerald-500/10">
+        <div className="flex items-center justify-between">
+          <p className="text-[18px] font-semibold text-emerald-800">Total Value</p>
+          <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-emerald-100 text-emerald-700 ring-1 ring-emerald-500/20 transition-transform duration-200 group-hover:scale-110">
+            <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+          </div>
+        </div>
+        <p className="mt-3 text-3xl font-black tracking-tight text-emerald-700 sm:text-4xl">
           {new Intl.NumberFormat('en-US', {
             style: 'currency',
             currency: 'USD',
           }).format(totalValue)}
         </p>
+        <p className="mt-2 text-[18px] font-medium text-emerald-600">
+          Combined stock valuation
+        </p>
       </div>
 
-      {/* Low Stock Alert */}
-      <div className="rounded-2xl border border-amber-100 bg-amber-50/60 p-5 shadow-lg backdrop-blur-xl">
-        <p className="text-sm font-medium text-amber-700">Low Stock Alert</p>
-        <p className="mt-2 text-3xl font-bold text-amber-600">{lowStockCount}</p>
+      {/* 3. Low Stock Alert */}
+      <div className="group relative overflow-hidden rounded-3xl border border-amber-200/80 bg-gradient-to-br from-white/90 via-amber-50/40 to-white/80 p-6 shadow-sm backdrop-blur-xl transition-all duration-200 hover:-translate-y-1 hover:border-amber-400 hover:shadow-lg hover:shadow-amber-500/10">
+        <div className="flex items-center justify-between">
+          <p className="text-[18px] font-semibold text-amber-900">Low Stock Alert</p>
+          <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-amber-100 text-amber-700 ring-1 ring-amber-500/20 transition-transform duration-200 group-hover:scale-110">
+            <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+            </svg>
+          </div>
+        </div>
+        <p className="mt-3 text-3xl font-black tracking-tight text-amber-600 sm:text-4xl">
+          {lowStockCount}
+        </p>
+        <p className="mt-2 text-[18px] font-medium text-amber-700">
+          Units with 5 or fewer items
+        </p>
       </div>
 
-      {/* Out of Stock */}
-      <div className="rounded-2xl border border-red-100 bg-red-50/60 p-5 shadow-lg backdrop-blur-xl">
-        <p className="text-sm font-medium text-red-700">Out of Stock</p>
-        <p className="mt-2 text-3xl font-bold text-red-600">{outOfStockCount}</p>
+      {/* 4. Out of Stock */}
+      <div className="group relative overflow-hidden rounded-3xl border border-rose-200/80 bg-gradient-to-br from-white/90 via-rose-50/40 to-white/80 p-6 shadow-sm backdrop-blur-xl transition-all duration-200 hover:-translate-y-1 hover:border-rose-400 hover:shadow-lg hover:shadow-rose-500/10">
+        <div className="flex items-center justify-between">
+          <p className="text-[18px] font-semibold text-rose-900">Out of Stock</p>
+          <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-rose-100 text-rose-700 ring-1 ring-rose-500/20 transition-transform duration-200 group-hover:scale-110">
+            <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636" />
+            </svg>
+          </div>
+        </div>
+        <p className="mt-3 text-3xl font-black tracking-tight text-rose-600 sm:text-4xl">
+          {outOfStockCount}
+        </p>
+        <p className="mt-2 text-[18px] font-medium text-rose-700">
+          Depleted inventory items
+        </p>
       </div>
     </div>
   )
