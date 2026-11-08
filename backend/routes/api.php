@@ -21,3 +21,6 @@ Route::post('/products', [ProductController::class, 'store']);
 
 // មើលផលិតផលមួយ
 Route::get('/products/{product}', [ProductController::class, 'show']);
+
+// កែផលិតផល
+Route::put('/products/{product}', [ProductController::class, 'update']);
