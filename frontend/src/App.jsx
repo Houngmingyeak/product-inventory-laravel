@@ -6,6 +6,7 @@ function App() {
   const [products, setProducts] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
+  const [search, setSearch] = useState('')
 
   // ទាញបញ្ជីផលិតផលពី Laravel
   async function loadProducts() {
@@ -37,6 +38,17 @@ function App() {
     loadProducts()
   }, [])
 
+  // ច្រោះតាម SKU, ឈ្មោះ ឬ Category ពេលកំពុងវាយ
+  const keyword = search.toLowerCase().trim()
+
+  const filteredProducts = products.filter((product) => {
+    return (
+      product.sku.toLowerCase().includes(keyword) ||
+      product.name.toLowerCase().includes(keyword) ||
+      product.category.toLowerCase().includes(keyword)
+    )
+  })
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-sky-100 via-white to-indigo-100 p-6">
       <div className="mx-auto max-w-6xl">
@@ -56,10 +68,21 @@ function App() {
 
         {!loading && !error && (
           <>
+            {/* កាតគណនាពីផលិតផលទាំងអស់ (មិនប្តូរពេល Search) */}
             <SummaryCards products={products} />
 
+            <div className="mb-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+              <input
+                type="text"
+                value={search}
+                onChange={(event) => setSearch(event.target.value)}
+                placeholder="Search product, SKU, or category..."
+                className="w-full rounded-xl border border-white/70 bg-white/60 px-4 py-2 text-sm shadow-sm outline-none backdrop-blur-xl focus:ring-2 focus:ring-blue-400 sm:max-w-sm"
+              />
+            </div>
+
             <ProductTable
-              products={products}
+              products={filteredProducts}
               onView={() => {}}
               onEdit={() => {}}
               onDelete={() => {}}
