@@ -96,23 +96,37 @@ function App() {
       <div className="pointer-events-none absolute -bottom-40 -left-40 -z-10 h-[400px] w-[400px] rounded-full bg-gradient-to-tr from-cyan-200/40 to-indigo-200/30 blur-3xl" />
 
       <main className="mx-auto flex h-full max-h-screen w-full max-w-7xl flex-1 flex-col overflow-hidden p-2.5 sm:p-3.5">
-        {/* Top Header */}
-        <header className="mb-2 flex shrink-0 flex-wrap items-center justify-between gap-2 border-b border-slate-200/60 pb-1.5">
+        {/* Top Header - Elevated Glass Navbar Card */}
+        <header className="mb-2.5 flex shrink-0 flex-wrap items-center justify-between gap-3 rounded-2xl sm:rounded-3xl border border-slate-200/80 bg-white/80 px-4 py-2.5 sm:px-5 sm:py-2.5 shadow-2xs backdrop-blur-xl">
           <div className="flex items-center gap-3">
-            <h1 className="text-2xl font-black tracking-tight text-slate-900 sm:text-3xl">
-              Product &amp; Inventory Management
-            </h1>
-            <div className="hidden items-center gap-2 rounded-full border border-indigo-200/80 bg-indigo-50/90 px-3 py-0.5 text-[18px] font-medium text-indigo-700 shadow-2xs sm:inline-flex">
-              <span className="relative flex h-2 w-2">
-                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75"></span>
-                <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500"></span>
+            {/* App Brand Icon Badge */}
+            <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-tr from-indigo-600 via-indigo-500 to-blue-500 text-white shadow-md shadow-indigo-600/25 ring-2 ring-indigo-500/20">
+              <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.2">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
+              </svg>
+            </div>
+
+            <div className="flex items-center gap-2.5">
+              <h1 className="text-xl font-black tracking-tight text-slate-900 sm:text-2xl">
+                Product &amp; Inventory Management
+              </h1>
+              <span className="hidden sm:inline-flex items-center gap-1.5 rounded-full border border-emerald-200 bg-emerald-50/90 px-2.5 py-0.5 text-[18px] font-semibold text-emerald-700 shadow-2xs">
+                <span className="relative flex h-2 w-2">
+                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75"></span>
+                  <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500"></span>
+                </span>
+                <span>Live</span>
               </span>
-              <span>Live Inventory</span>
             </div>
           </div>
-          <p className="text-[18px] text-slate-500">
-            Real-time catalog &amp; stock valuation
-          </p>
+
+          {/* Right Status Badge */}
+          <div className="hidden md:flex items-center gap-2 rounded-full border border-slate-200/80 bg-slate-50/90 px-3.5 py-1 text-[18px] font-medium text-slate-600 shadow-2xs">
+            <svg className="h-4.5 w-4.5 text-indigo-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+            </svg>
+            <span>Real-time Catalog &amp; Valuation</span>
+          </div>
         </header>
 
         {/* Global Error Banner */}
