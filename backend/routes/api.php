@@ -18,3 +18,6 @@ Route::get('/products', [ProductController::class, 'index']);
 
 // បន្ថែមផលិតផលថ្មី
 Route::post('/products', [ProductController::class, 'store']);
+
+// មើលផលិតផលមួយ
+Route::get('/products/{product}', [ProductController::class, 'show']);
