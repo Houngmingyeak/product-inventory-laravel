@@ -1,32 +1,32 @@
 function ProductTable({ products, onView, onEdit, onDelete }) {
   return (
-    <div className="overflow-hidden rounded-3xl border border-slate-200/90 bg-white/85 shadow-lg shadow-slate-200/50 backdrop-blur-xl">
-      <div className="overflow-x-auto">
-        <table className="min-w-full divide-y divide-slate-200 text-left text-[18px]">
-          <thead className="bg-slate-100/70 font-semibold text-slate-700">
+    <div className="flex h-full flex-col overflow-hidden rounded-2xl border border-slate-200/90 bg-white/85 shadow-md backdrop-blur-xl">
+      <div className="flex-1 overflow-y-auto overflow-x-hidden">
+        <table className="w-full text-left text-[18px]">
+          <thead className="sticky top-0 z-10 bg-slate-100/95 shadow-2xs backdrop-blur-md font-semibold text-slate-700">
             <tr>
-              <th scope="col" className="px-6 py-4.5 whitespace-nowrap">
+              <th scope="col" className="w-[14%] px-3 py-2.5 whitespace-nowrap">
                 SKU
               </th>
-              <th scope="col" className="px-6 py-4.5 whitespace-nowrap">
+              <th scope="col" className="w-[24%] px-3 py-2.5 whitespace-nowrap">
                 Product Name
               </th>
-              <th scope="col" className="px-6 py-4.5 whitespace-nowrap">
+              <th scope="col" className="w-[15%] px-3 py-2.5 whitespace-nowrap">
                 Category
               </th>
-              <th scope="col" className="px-6 py-4.5 whitespace-nowrap">
+              <th scope="col" className="w-[11%] px-3 py-2.5 whitespace-nowrap">
                 Unit Price
               </th>
-              <th scope="col" className="px-6 py-4.5 text-center whitespace-nowrap">
-                Stock Qty
+              <th scope="col" className="w-[8%] px-2 py-2.5 text-center whitespace-nowrap">
+                Stock
               </th>
-              <th scope="col" className="px-6 py-4.5 whitespace-nowrap">
+              <th scope="col" className="w-[12%] px-3 py-2.5 whitespace-nowrap">
                 Total Value
               </th>
-              <th scope="col" className="px-6 py-4.5 whitespace-nowrap">
+              <th scope="col" className="w-[10%] px-2.5 py-2.5 whitespace-nowrap">
                 Status
               </th>
-              <th scope="col" className="px-6 py-4.5 text-right whitespace-nowrap">
+              <th scope="col" className="w-[6%] px-3 py-2.5 text-right whitespace-nowrap">
                 Actions
               </th>
             </tr>
@@ -35,16 +35,16 @@ function ProductTable({ products, onView, onEdit, onDelete }) {
           <tbody className="divide-y divide-slate-100 bg-transparent">
             {products.length === 0 ? (
               <tr>
-                <td colSpan="8" className="px-6 py-16 text-center">
+                <td colSpan="8" className="px-6 py-12 text-center">
                   <div className="mx-auto flex max-w-sm flex-col items-center justify-center">
-                    <div className="mb-3 flex h-14 w-14 items-center justify-center rounded-2xl bg-slate-100 text-slate-400">
-                      <svg className="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5">
+                    <div className="mb-2 flex h-12 w-12 items-center justify-center rounded-2xl bg-slate-100 text-slate-400">
+                      <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5">
                         <path strokeLinecap="round" strokeLinejoin="round" d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4" />
                       </svg>
                     </div>
                     <p className="text-xl font-bold text-slate-800">No products found</p>
                     <p className="mt-1 text-[18px] text-slate-500">
-                      Try adjusting your search criteria or add a new product to your inventory.
+                      Try adjusting your search criteria or add a new product.
                     </p>
                   </div>
                 </td>
@@ -52,46 +52,48 @@ function ProductTable({ products, onView, onEdit, onDelete }) {
             ) : (
               products.map((product) => {
                 // ជ្រើសពណ៌ Badge តាម status ដែល Laravel គណនាឱ្យ
-                let badgeClass = ''
-                let dotClass = ''
+                const badgeClass =
+                  product.status === 'In Stock'
+                    ? 'border-emerald-300 bg-emerald-50 text-emerald-800'
+                    : product.status === 'Low Stock'
+                      ? 'border-amber-300 bg-amber-50 text-amber-800'
+                      : 'border-rose-300 bg-rose-50 text-rose-800'
 
-                if (product.status === 'In Stock') {
-                  badgeClass = 'border-emerald-300 bg-emerald-50 text-emerald-800'
-                  dotClass = 'bg-emerald-500'
-                } else if (product.status === 'Low Stock') {
-                  badgeClass = 'border-amber-300 bg-amber-50 text-amber-800'
-                  dotClass = 'bg-amber-500'
-                } else {
-                  badgeClass = 'border-rose-300 bg-rose-50 text-rose-800'
-                  dotClass = 'bg-rose-500'
-                }
+                const dotClass =
+                  product.status === 'In Stock'
+                    ? 'bg-emerald-500'
+                    : product.status === 'Low Stock'
+                      ? 'bg-amber-500'
+                      : 'bg-rose-500'
 
                 return (
                   <tr
                     key={product.id}
-                    className="transition-colors duration-150 hover:bg-indigo-50/40"
+                    className="transition-colors duration-100 hover:bg-indigo-50/40"
                   >
                     {/* SKU */}
-                    <td className="px-6 py-4.5 whitespace-nowrap">
-                      <span className="inline-block rounded-xl border border-slate-200 bg-slate-100/90 px-3 py-1 font-mono text-[18px] font-semibold text-slate-800 shadow-2xs">
+                    <td className="px-3 py-2 whitespace-nowrap">
+                      <span className="inline-block rounded-lg border border-slate-200 bg-slate-100/90 px-2 py-0.5 font-mono text-[18px] font-semibold text-slate-800 shadow-2xs">
                         {product.sku}
                       </span>
                     </td>
 
                     {/* Name */}
-                    <td className="px-6 py-4.5 font-bold text-slate-900 whitespace-nowrap">
-                      {product.name}
+                    <td className="px-3 py-2 font-bold text-slate-900">
+                      <span className="block truncate" title={product.name}>
+                        {product.name}
+                      </span>
                     </td>
 
                     {/* Category */}
-                    <td className="px-6 py-4.5 whitespace-nowrap">
-                      <span className="inline-block rounded-xl border border-slate-200/80 bg-slate-50 px-3 py-1 text-[18px] font-medium text-slate-700">
+                    <td className="px-3 py-2 whitespace-nowrap">
+                      <span className="inline-block rounded-lg border border-slate-200/80 bg-slate-50 px-2.5 py-0.5 text-[18px] font-medium text-slate-700">
                         {product.category}
                       </span>
                     </td>
 
                     {/* Unit Price */}
-                    <td className="px-6 py-4.5 font-semibold text-slate-800 whitespace-nowrap">
+                    <td className="px-3 py-2 font-semibold text-slate-800 whitespace-nowrap">
                       {new Intl.NumberFormat('en-US', {
                         style: 'currency',
                         currency: 'USD',
@@ -99,14 +101,14 @@ function ProductTable({ products, onView, onEdit, onDelete }) {
                     </td>
 
                     {/* Stock Qty */}
-                    <td className="px-6 py-4.5 text-center whitespace-nowrap">
-                      <span className="inline-block min-w-10 rounded-xl border border-slate-200 bg-slate-50 px-3 py-1 font-bold text-slate-800">
+                    <td className="px-2 py-2 text-center whitespace-nowrap">
+                      <span className="inline-block min-w-8 rounded-lg border border-slate-200 bg-slate-50 px-2 py-0.5 font-bold text-slate-800">
                         {product.stock}
                       </span>
                     </td>
 
                     {/* Total Value */}
-                    <td className="px-6 py-4.5 font-black text-indigo-700 whitespace-nowrap">
+                    <td className="px-3 py-2 font-black text-indigo-700 whitespace-nowrap">
                       {new Intl.NumberFormat('en-US', {
                         style: 'currency',
                         currency: 'USD',
@@ -114,31 +116,31 @@ function ProductTable({ products, onView, onEdit, onDelete }) {
                     </td>
 
                     {/* Status */}
-                    <td className="px-6 py-4.5 whitespace-nowrap">
+                    <td className="px-2.5 py-2 whitespace-nowrap">
                       <span
                         className={
-                          'inline-flex items-center gap-2 rounded-full border px-3.5 py-1 text-[18px] font-semibold shadow-2xs ' +
+                          'inline-flex items-center gap-1.5 rounded-full border px-2.5 py-0.5 text-[18px] font-semibold shadow-2xs ' +
                           badgeClass
                         }
                       >
-                        <span className={'h-2.5 w-2.5 rounded-full ' + dotClass}></span>
+                        <span className={'h-2 w-2 rounded-full ' + dotClass}></span>
                         <span>{product.status}</span>
                       </span>
                     </td>
 
                     {/* Actions */}
-                    <td className="px-6 py-4.5 text-right whitespace-nowrap">
-                      <div className="flex items-center justify-end gap-2">
+                    <td className="px-3 py-2 text-right whitespace-nowrap">
+                      <div className="flex items-center justify-end gap-1">
                         {/* View Action */}
                         <button
                           type="button"
                           title="View Details"
                           onClick={() => onView(product)}
-                          className="cursor-pointer rounded-xl border border-transparent p-2 text-slate-500 transition-all hover:border-slate-200 hover:bg-slate-100 hover:text-slate-900 active:scale-95"
+                          className="cursor-pointer rounded-lg p-1.5 text-slate-500 transition-all hover:bg-slate-100 hover:text-slate-900 active:scale-95"
                         >
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
-                            className="h-6 w-6"
+                            className="h-5 w-5"
                             fill="none"
                             viewBox="0 0 24 24"
                             stroke="currentColor"
@@ -162,11 +164,11 @@ function ProductTable({ products, onView, onEdit, onDelete }) {
                           type="button"
                           title="Edit Product"
                           onClick={() => onEdit(product)}
-                          className="cursor-pointer rounded-xl border border-transparent p-2 text-blue-600 transition-all hover:border-blue-200 hover:bg-blue-50 hover:text-blue-800 active:scale-95"
+                          className="cursor-pointer rounded-lg p-1.5 text-blue-600 transition-all hover:bg-blue-50 hover:text-blue-800 active:scale-95"
                         >
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
-                            className="h-6 w-6"
+                            className="h-5 w-5"
                             fill="none"
                             viewBox="0 0 24 24"
                             stroke="currentColor"
@@ -185,11 +187,11 @@ function ProductTable({ products, onView, onEdit, onDelete }) {
                           type="button"
                           title="Delete Product"
                           onClick={() => onDelete(product)}
-                          className="cursor-pointer rounded-xl border border-transparent p-2 text-rose-600 transition-all hover:border-rose-200 hover:bg-rose-50 hover:text-rose-800 active:scale-95"
+                          className="cursor-pointer rounded-lg p-1.5 text-rose-600 transition-all hover:bg-rose-50 hover:text-rose-800 active:scale-95"
                         >
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
-                            className="h-6 w-6"
+                            className="h-5 w-5"
                             fill="none"
                             viewBox="0 0 24 24"
                             stroke="currentColor"

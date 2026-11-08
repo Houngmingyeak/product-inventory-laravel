@@ -1,17 +1,17 @@
 function ViewProductModal({ product, onClose }) {
-  let badgeClass = ''
-  let dotClass = ''
+  const badgeClass =
+    product.status === 'In Stock'
+      ? 'border-emerald-300 bg-emerald-50 text-emerald-800'
+      : product.status === 'Low Stock'
+        ? 'border-amber-300 bg-amber-50 text-amber-800'
+        : 'border-rose-300 bg-rose-50 text-rose-800'
 
-  if (product.status === 'In Stock') {
-    badgeClass = 'border-emerald-300 bg-emerald-50 text-emerald-800'
-    dotClass = 'bg-emerald-500'
-  } else if (product.status === 'Low Stock') {
-    badgeClass = 'border-amber-300 bg-amber-50 text-amber-800'
-    dotClass = 'bg-amber-500'
-  } else {
-    badgeClass = 'border-rose-300 bg-rose-50 text-rose-800'
-    dotClass = 'bg-rose-500'
-  }
+  const dotClass =
+    product.status === 'In Stock'
+      ? 'bg-emerald-500'
+      : product.status === 'Low Stock'
+        ? 'bg-amber-500'
+        : 'bg-rose-500'
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center overflow-y-auto bg-slate-950/45 p-4 backdrop-blur-md">
