@@ -1,12 +1,14 @@
 import { useEffect, useState } from 'react'
 import ProductTable from './components/ProductTable'
 import SummaryCards from './components/SummaryCards'
+import AddProductModal from './components/AddProductModal'
 
 function App() {
   const [products, setProducts] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
   const [search, setSearch] = useState('')
+  const [showAddModal, setShowAddModal] = useState(false)
 
   // ទាញបញ្ជីផលិតផលពី Laravel
   async function loadProducts() {
@@ -38,6 +40,12 @@ function App() {
     loadProducts()
   }, [])
 
+  // ក្រោយបន្ថែមជោគជ័យ៖ បិទ modal ហើយទាញបញ្ជីថ្មី (កាតនឹងប្តូរភ្លាម)
+  function handleAdded() {
+    setShowAddModal(false)
+    loadProducts()
+  }
+
   // ច្រោះតាម SKU, ឈ្មោះ ឬ Category ពេលកំពុងវាយ
   const keyword = search.toLowerCase().trim()
 
@@ -68,7 +76,6 @@ function App() {
 
         {!loading && !error && (
           <>
-            {/* កាតគណនាពីផលិតផលទាំងអស់ (មិនប្តូរពេល Search) */}
             <SummaryCards products={products} />
 
             <div className="mb-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
@@ -79,6 +86,14 @@ function App() {
                 placeholder="Search product, SKU, or category..."
                 className="w-full rounded-xl border border-white/70 bg-white/60 px-4 py-2 text-sm shadow-sm outline-none backdrop-blur-xl focus:ring-2 focus:ring-blue-400 sm:max-w-sm"
               />
+
+              <button
+                type="button"
+                onClick={() => setShowAddModal(true)}
+                className="rounded-xl bg-blue-600 px-4 py-2 text-sm font-semibold text-white shadow hover:bg-blue-700"
+              >
+                + Add Product
+              </button>
             </div>
 
             <ProductTable
@@ -88,6 +103,13 @@ function App() {
               onDelete={() => {}}
             />
           </>
+        )}
+
+        {showAddModal && (
+          <AddProductModal
+            onClose={() => setShowAddModal(false)}
+            onSaved={handleAdded}
+          />
         )}
       </div>
     </div>
