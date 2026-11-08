@@ -57,4 +57,13 @@ class ProductController extends Controller
 
         return response()->json($product, 201);
     }
+
+        // GET /api/products/{product}
+    // មើលផលិតផលមួយ
+    // Laravel ស្វែងរក Product តាម id ដោយស្វ័យប្រវត្តិ (Route Model Binding)
+    // បើរកមិនឃើញ វាឆ្លើយ 404 ឱ្យ
+    public function show(Product $product)
+    {
+        return response()->json($product);
+    }
 }
