@@ -1,7 +1,7 @@
 function ProductTable({ products, onView, onEdit, onDelete }) {
   return (
     <div className="flex h-full flex-col overflow-hidden rounded-2xl border border-slate-200/90 bg-white/85 shadow-md backdrop-blur-xl">
-      <div className="flex-1 overflow-y-auto overflow-x-hidden">
+      <div className="flex-1 overflow-y-auto overflow-x-hidden no-scrollbar">
         <table className="w-full text-left text-[18px]">
           <thead className="sticky top-0 z-10 bg-slate-100/95 shadow-2xs backdrop-blur-md font-semibold text-slate-700">
             <tr>

@@ -84,9 +84,9 @@ function App() {
       <div className="pointer-events-none absolute top-1/3 -right-40 -z-10 h-[350px] w-[350px] rounded-full bg-gradient-to-br from-violet-200/40 to-pink-200/30 blur-3xl" />
       <div className="pointer-events-none absolute -bottom-40 -left-40 -z-10 h-[400px] w-[400px] rounded-full bg-gradient-to-tr from-cyan-200/40 to-indigo-200/30 blur-3xl" />
 
-      <main className="mx-auto flex h-full max-h-screen w-full max-w-7xl flex-1 flex-col overflow-hidden p-3 sm:p-4">
+      <main className="mx-auto flex h-full max-h-screen w-full max-w-7xl flex-1 flex-col overflow-hidden p-2.5 sm:p-3.5">
         {/* Top Header */}
-        <header className="mb-2.5 flex shrink-0 flex-wrap items-center justify-between gap-2 border-b border-slate-200/60 pb-2">
+        <header className="mb-2 flex shrink-0 flex-wrap items-center justify-between gap-2 border-b border-slate-200/60 pb-1.5">
           <div className="flex items-center gap-3">
             <h1 className="text-2xl font-black tracking-tight text-slate-900 sm:text-3xl">
               Product &amp; Inventory Management
@@ -106,7 +106,7 @@ function App() {
 
         {/* Global Error Banner */}
         {error && (
-          <div className="mb-2.5 flex shrink-0 items-center gap-3 rounded-2xl border border-red-200 bg-red-50/95 px-4 py-2 text-[18px] text-red-800 shadow-xs">
+          <div className="mb-2 flex shrink-0 items-center gap-3 rounded-2xl border border-red-200 bg-red-50/95 px-4 py-2 text-[18px] text-red-800 shadow-xs">
             <svg
               className="h-5 w-5 shrink-0 text-red-600"
               fill="none"
@@ -135,15 +135,15 @@ function App() {
         {!loading && !error && (
           <>
             {/* Summary Cards */}
-            <div className="shrink-0">
+            <div className="mb-2 shrink-0">
               <SummaryCards products={products} />
             </div>
 
             {/* Filter & Action Bar */}
-            <div className="mb-2.5 flex shrink-0 items-center justify-between gap-3">
-              {/* Search Bar */}
-              <div className="relative w-full max-w-sm sm:max-w-md">
-                <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3.5 text-slate-400">
+            <div className="mb-2 flex shrink-0 items-center gap-3">
+              {/* Search Bar - fills the space naturally */}
+              <div className="relative flex-1">
+                <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-4 text-slate-400">
                   <svg
                     className="h-5 w-5"
                     fill="none"
@@ -163,13 +163,13 @@ function App() {
                   value={search}
                   onChange={(event) => setSearch(event.target.value)}
                   placeholder="Search product, SKU, or category..."
-                  className="w-full rounded-2xl border border-slate-200 bg-white/85 py-2.5 pr-4 pl-11 text-[18px] text-slate-800 placeholder-slate-400 shadow-2xs backdrop-blur-md transition-all outline-none focus:border-indigo-500 focus:bg-white focus:ring-4 focus:ring-indigo-500/15"
+                  className="w-full rounded-full border border-slate-200 bg-white/85 py-2 pr-4 pl-11 text-[18px] text-slate-800 placeholder-slate-400 shadow-2xs backdrop-blur-md transition-all outline-none focus:border-indigo-500 focus:bg-white focus:ring-4 focus:ring-indigo-500/15"
                 />
                 {search && (
                   <button
                     type="button"
                     onClick={() => setSearch('')}
-                    className="absolute inset-y-0 right-0 flex items-center pr-3 text-slate-400 hover:text-slate-600"
+                    className="absolute inset-y-0 right-0 flex items-center pr-3.5 text-slate-400 hover:text-slate-600"
                     title="Clear search"
                   >
                     <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
@@ -183,7 +183,7 @@ function App() {
               <button
                 type="button"
                 onClick={() => setShowAddModal(true)}
-                className="inline-flex cursor-pointer shrink-0 items-center justify-center gap-2 rounded-2xl bg-gradient-to-r from-indigo-600 to-blue-600 px-5 py-2.5 text-[18px] font-semibold text-white shadow-md shadow-indigo-600/20 transition-all hover:from-indigo-500 hover:to-blue-500 active:scale-[0.98]"
+                className="inline-flex cursor-pointer shrink-0 items-center justify-center gap-2 rounded-full bg-gradient-to-r from-indigo-600 to-blue-600 px-5 py-2 text-[18px] font-semibold text-white shadow-md shadow-indigo-600/20 transition-all hover:from-indigo-500 hover:to-blue-500 active:scale-[0.98]"
               >
                 <svg
                   className="h-5 w-5"
