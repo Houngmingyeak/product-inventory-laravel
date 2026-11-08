@@ -1,48 +1,75 @@
 function ViewProductModal({ product, onClose }) {
-  let statusClass = ''
+  let badgeClass = ''
+  let dotClass = ''
+
   if (product.status === 'In Stock') {
-    statusClass = 'border-emerald-200 bg-emerald-50 text-emerald-700'
+    badgeClass = 'border-emerald-300 bg-emerald-50 text-emerald-800'
+    dotClass = 'bg-emerald-500'
   } else if (product.status === 'Low Stock') {
-    statusClass = 'border-amber-200 bg-amber-50 text-amber-700'
+    badgeClass = 'border-amber-300 bg-amber-50 text-amber-800'
+    dotClass = 'bg-amber-500'
   } else {
-    statusClass = 'border-red-600 bg-red-600 text-white'
+    badgeClass = 'border-rose-300 bg-rose-50 text-rose-800'
+    dotClass = 'bg-rose-500'
   }
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/30 p-4 backdrop-blur-sm">
-      <div className="w-full max-w-md rounded-2xl border border-white/70 bg-white/80 p-6 shadow-2xl backdrop-blur-xl">
-        <div className="mb-4 flex items-center justify-between">
-          <h2 className="text-xl font-bold text-slate-800">Product Details</h2>
+    <div className="fixed inset-0 z-50 flex items-center justify-center overflow-y-auto bg-slate-950/45 p-4 backdrop-blur-md">
+      <div className="w-full max-w-lg rounded-3xl border border-slate-200/90 bg-white/95 p-6 shadow-2xl backdrop-blur-2xl sm:p-8">
+        {/* Header */}
+        <div className="mb-6 flex items-center justify-between border-b border-slate-100 pb-4">
+          <div className="flex items-center gap-3">
+            <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-indigo-50 text-indigo-600 ring-1 ring-indigo-500/20">
+              <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                <path strokeLinecap="round" strokeLinejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+              </svg>
+            </div>
+            <div>
+              <h2 className="text-2xl font-black tracking-tight text-slate-900">Product Details</h2>
+              <p className="text-[18px] text-slate-500">Comprehensive inventory item view</p>
+            </div>
+          </div>
           <button
             type="button"
             onClick={onClose}
-            className="rounded-lg px-2 py-1 text-slate-500 hover:bg-slate-100"
+            className="cursor-pointer rounded-xl p-2 text-slate-400 transition-colors hover:bg-slate-100 hover:text-slate-700"
+            title="Close"
           >
-            ✕
+            <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+            </svg>
           </button>
         </div>
 
-        <div className="space-y-3 text-sm">
-          <div className="flex justify-between border-b border-slate-100 pb-2">
-            <span className="text-slate-500">SKU</span>
-            <span className="rounded-md border border-slate-200 bg-slate-100 px-2 py-0.5 font-mono text-xs text-slate-700">
+        {/* Content Details */}
+        <div className="space-y-3.5 text-[18px]">
+          {/* SKU */}
+          <div className="flex items-center justify-between rounded-2xl bg-slate-50/80 px-4 py-3 border border-slate-100">
+            <span className="font-semibold text-slate-500">SKU</span>
+            <span className="rounded-xl border border-slate-200 bg-white px-3 py-1 font-mono text-[18px] font-bold text-slate-800 shadow-2xs">
               {product.sku}
             </span>
           </div>
 
-          <div className="flex justify-between border-b border-slate-100 pb-2">
-            <span className="text-slate-500">Product Name</span>
-            <span className="font-semibold text-slate-800">{product.name}</span>
+          {/* Product Name */}
+          <div className="flex items-center justify-between rounded-2xl bg-slate-50/80 px-4 py-3 border border-slate-100">
+            <span className="font-semibold text-slate-500">Product Name</span>
+            <span className="text-right text-[18px] font-bold text-slate-900">{product.name}</span>
           </div>
 
-          <div className="flex justify-between border-b border-slate-100 pb-2">
-            <span className="text-slate-500">Category</span>
-            <span className="text-slate-800">{product.category}</span>
+          {/* Category */}
+          <div className="flex items-center justify-between rounded-2xl bg-slate-50/80 px-4 py-3 border border-slate-100">
+            <span className="font-semibold text-slate-500">Category</span>
+            <span className="rounded-xl border border-slate-200 bg-white px-3 py-1 text-[18px] font-medium text-slate-700">
+              {product.category}
+            </span>
           </div>
 
-          <div className="flex justify-between border-b border-slate-100 pb-2">
-            <span className="text-slate-500">Unit Price</span>
-            <span className="text-slate-800">
+          {/* Unit Price */}
+          <div className="flex items-center justify-between rounded-2xl bg-slate-50/80 px-4 py-3 border border-slate-100">
+            <span className="font-semibold text-slate-500">Unit Price</span>
+            <span className="text-[18px] font-bold text-slate-900">
               {new Intl.NumberFormat('en-US', {
                 style: 'currency',
                 currency: 'USD',
@@ -50,14 +77,18 @@ function ViewProductModal({ product, onClose }) {
             </span>
           </div>
 
-          <div className="flex justify-between border-b border-slate-100 pb-2">
-            <span className="text-slate-500">Stock Qty</span>
-            <span className="text-slate-800">{product.stock}</span>
+          {/* Stock Qty */}
+          <div className="flex items-center justify-between rounded-2xl bg-slate-50/80 px-4 py-3 border border-slate-100">
+            <span className="font-semibold text-slate-500">Stock Quantity</span>
+            <span className="rounded-xl border border-slate-200 bg-white px-3 py-1 text-[18px] font-bold text-slate-900">
+              {product.stock} units
+            </span>
           </div>
 
-          <div className="flex justify-between border-b border-slate-100 pb-2">
-            <span className="text-slate-500">Total Value</span>
-            <span className="font-bold text-slate-800">
+          {/* Total Value */}
+          <div className="flex items-center justify-between rounded-2xl bg-indigo-50/60 px-4 py-3 border border-indigo-100">
+            <span className="font-bold text-indigo-900">Total Value</span>
+            <span className="text-xl font-black text-indigo-700">
               {new Intl.NumberFormat('en-US', {
                 style: 'currency',
                 currency: 'USD',
@@ -65,27 +96,29 @@ function ViewProductModal({ product, onClose }) {
             </span>
           </div>
 
-          <div className="flex items-center justify-between">
-            <span className="text-slate-500">Status</span>
+          {/* Status */}
+          <div className="flex items-center justify-between rounded-2xl bg-slate-50/80 px-4 py-3 border border-slate-100">
+            <span className="font-semibold text-slate-500">Inventory Status</span>
             <span
               className={
-                'inline-flex items-center rounded-full border px-2.5 py-1 text-xs font-semibold ' +
-                statusClass
+                'inline-flex items-center gap-2 rounded-full border px-3.5 py-1 text-[18px] font-semibold ' +
+                badgeClass
               }
             >
-              <span className="mr-1.5 inline-block h-1.5 w-1.5 rounded-full bg-current"></span>
-              {product.status}
+              <span className={'h-2.5 w-2.5 rounded-full ' + dotClass}></span>
+              <span>{product.status}</span>
             </span>
           </div>
         </div>
 
-        <div className="mt-6 flex justify-end">
+        {/* Footer */}
+        <div className="mt-8 flex justify-end border-t border-slate-100 pt-5">
           <button
             type="button"
             onClick={onClose}
-            className="rounded-xl bg-blue-600 px-4 py-2 text-sm font-semibold text-white hover:bg-blue-700"
+            className="cursor-pointer rounded-2xl bg-indigo-600 px-7 py-3 text-[18px] font-bold text-white shadow-lg shadow-indigo-600/25 transition-all hover:bg-indigo-500 active:scale-[0.98]"
           >
-            Close
+            Close Details
           </button>
         </div>
       </div>
