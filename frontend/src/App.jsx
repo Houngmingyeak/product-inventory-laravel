@@ -1,63 +1,65 @@
 import { useEffect, useState } from 'react'
+import ProductTable from './components/ProductTable'
 
 function App() {
-  const [data, setData] = useState(null)
+  const [products, setProducts] = useState([])
+  const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
 
-  useEffect(() => {
-    async function loadPing() {
-      try {
-        const response = await fetch('/api/ping', {
-          headers: {
-            Accept: 'application/json',
-          },
-        })
+  // ទាញបញ្ជីផលិតផលពី Laravel
+  async function loadProducts() {
+    try {
+      const response = await fetch('/api/products', {
+        headers: {
+          Accept: 'application/json',
+        },
+      })
 
-        // fetch មិន throw error ពេល status 404/500 ដូច្នេះត្រូវពិនិត្យ response.ok ខ្លួនឯង
-        if (!response.ok) {
-          setError('Laravel API returned status ' + response.status)
-          return
-        }
-
-        const result = await response.json()
-        setData(result)
-      } catch (err) {
-        setError('Cannot connect to Laravel API')
+      if (!response.ok) {
+        setError('Laravel API returned status ' + response.status)
+        setLoading(false)
+        return
       }
+
+      const data = await response.json()
+      setProducts(data)
+      setError('')
+    } catch {
+      setError('Cannot connect to Laravel API')
     }
 
-    loadPing()
+    setLoading(false)
+  }
+
+  // ដំណើរការម្តងពេលទំព័របើក
+  useEffect(() => {
+    loadProducts()
   }, [])
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-sky-100 via-white to-indigo-100 flex items-center justify-center p-6">
-      <div className="w-full max-w-md rounded-2xl border border-white/60 bg-white/50 backdrop-blur-xl shadow-lg p-8">
-        <h1 className="text-2xl font-bold text-slate-800 mb-4">
-          Product &amp; Inventory System
+    <div className="min-h-screen bg-gradient-to-br from-sky-100 via-white to-indigo-100 p-6">
+      <div className="mx-auto max-w-6xl">
+        <h1 className="mb-6 text-3xl font-bold text-slate-800">
+          Product &amp; Inventory Management
         </h1>
 
         {error && (
-          <p className="rounded-lg bg-red-50 text-red-600 px-4 py-2 text-sm">
+          <p className="mb-4 rounded-lg bg-red-50 px-4 py-2 text-sm text-red-600">
             {error}
           </p>
         )}
 
-        {!error && !data && (
-          <p className="text-slate-500 text-sm">Connecting to API...</p>
+        {loading && !error && (
+          <p className="text-sm text-slate-500">Loading products...</p>
         )}
 
-        {data && (
-          <div className="space-y-2 text-sm text-slate-700">
-            <p>
-              <span className="font-semibold">API:</span> {data.message}
-            </p>
-            <p>
-              <span className="font-semibold">Database:</span> {data.database}
-            </p>
-            <p>
-              <span className="font-semibold">Driver:</span> {data.driver}
-            </p>
-          </div>
+        {!loading && !error && (
+          <ProductTable
+            products={products}
+            onView={() => {}}
+            onEdit={() => {}}
+            onDelete={() => {}}
+          />
         )}
       </div>
     </div>
