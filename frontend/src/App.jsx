@@ -11,6 +11,8 @@ function App() {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
   const [search, setSearch] = useState('')
+  const [selectedCategory, setSelectedCategory] = useState('All Categories')
+  const [isCategoryOpen, setIsCategoryOpen] = useState(false)
 
   // Modals៖ null មានន័យថាបិទ, មាន product មានន័យថាបើក
   const [showAddModal, setShowAddModal] = useState(false)
@@ -66,15 +68,24 @@ function App() {
     loadProducts()
   }
 
-  // ច្រោះតាម SKU, ឈ្មោះ ឬ Category ពេលកំពុងវាយ
+  // ច្រោះតាម SKU, ឈ្មោះ ឬ Category ពេលកំពុងវាយ និងតាម Category Dropdown
   const keyword = search.toLowerCase().trim()
 
+  const defaultCategories = ['Electronics', 'Accessories', 'Furniture', 'Clothing', 'Books', 'Other']
+  const dynamicCategories = Array.from(new Set(products.map((p) => p.category).filter(Boolean)))
+  const categories = ['All Categories', ...Array.from(new Set([...defaultCategories, ...dynamicCategories]))]
+
   const filteredProducts = products.filter((product) => {
-    return (
+    const matchesKeyword =
       product.sku.toLowerCase().includes(keyword) ||
       product.name.toLowerCase().includes(keyword) ||
       product.category.toLowerCase().includes(keyword)
-    )
+
+    const matchesCategory =
+      selectedCategory === 'All Categories' ||
+      product.category.toLowerCase() === selectedCategory.toLowerCase()
+
+    return matchesKeyword && matchesCategory
   })
 
   return (
@@ -140,16 +151,16 @@ function App() {
             </div>
 
             {/* Filter & Action Bar */}
-            <div className="mb-2 flex shrink-0 items-center gap-3">
-              {/* Search Bar - fills the space naturally */}
+            <div className="mb-3 flex shrink-0 items-center gap-3">
+              {/* Search Bar with Find Icon */}
               <div className="relative flex-1">
-                <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-4 text-slate-400">
+                <div className="pointer-events-none absolute inset-y-0 left-0 z-10 flex items-center pl-4 text-slate-400">
                   <svg
                     className="h-5 w-5"
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"
-                    strokeWidth="2"
+                    strokeWidth="2.5"
                   >
                     <path
                       strokeLinecap="round"
@@ -163,13 +174,13 @@ function App() {
                   value={search}
                   onChange={(event) => setSearch(event.target.value)}
                   placeholder="Search product, SKU, or category..."
-                  className="w-full rounded-full border border-slate-200 bg-white/85 py-2 pr-4 pl-11 text-[18px] text-slate-800 placeholder-slate-400 shadow-2xs backdrop-blur-md transition-all outline-none focus:border-indigo-500 focus:bg-white focus:ring-4 focus:ring-indigo-500/15"
+                  className="w-full rounded-full border border-slate-200 bg-white/90 py-2.5 pr-10 pl-12 text-[18px] text-slate-800 placeholder-slate-400 shadow-2xs backdrop-blur-md transition-all outline-none focus:border-indigo-500 focus:bg-white focus:ring-4 focus:ring-indigo-500/15"
                 />
                 {search && (
                   <button
                     type="button"
                     onClick={() => setSearch('')}
-                    className="absolute inset-y-0 right-0 flex items-center pr-3.5 text-slate-400 hover:text-slate-600"
+                    className="absolute inset-y-0 right-0 z-10 flex items-center pr-3.5 text-slate-400 hover:text-slate-600 cursor-pointer"
                     title="Clear search"
                   >
                     <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
@@ -179,11 +190,79 @@ function App() {
                 )}
               </div>
 
+              {/* Category Filter Dropdown Button */}
+              <div className="relative shrink-0">
+                <button
+                  type="button"
+                  onClick={() => setIsCategoryOpen(!isCategoryOpen)}
+                  className="inline-flex cursor-pointer items-center gap-2 rounded-full border border-slate-200 bg-white/90 px-4.5 py-2.5 text-[18px] font-semibold text-slate-700 shadow-2xs backdrop-blur-md transition-all hover:border-slate-300 hover:bg-slate-50 active:scale-[0.98]"
+                  title="Filter by category"
+                >
+                  <svg
+                    className="h-5 w-5 text-indigo-600"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"
+                    />
+                  </svg>
+                  <span className="max-w-[130px] truncate">{selectedCategory}</span>
+                  <svg
+                    className={`h-4 w-4 text-slate-400 transition-transform duration-200 ${isCategoryOpen ? 'rotate-180' : ''}`}
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    strokeWidth="2.5"
+                  >
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+                  </svg>
+                </button>
+
+                {/* Dropdown Popover */}
+                {isCategoryOpen && (
+                  <>
+                    <div
+                      className="fixed inset-0 z-30"
+                      onClick={() => setIsCategoryOpen(false)}
+                    />
+                    <div className="absolute right-0 top-full mt-2 z-40 max-h-64 min-w-[210px] overflow-y-auto no-scrollbar rounded-2xl border border-slate-200 bg-white/95 p-1.5 shadow-xl backdrop-blur-xl">
+                      {categories.map((cat) => (
+                        <button
+                          key={cat}
+                          type="button"
+                          onClick={() => {
+                            setSelectedCategory(cat)
+                            setIsCategoryOpen(false)
+                          }}
+                          className={`flex w-full cursor-pointer items-center justify-between rounded-xl px-3.5 py-2 text-[18px] transition-colors ${
+                            selectedCategory === cat
+                              ? 'bg-indigo-50 font-bold text-indigo-700'
+                              : 'font-medium text-slate-700 hover:bg-slate-100'
+                          }`}
+                        >
+                          <span>{cat}</span>
+                          {selectedCategory === cat && (
+                            <svg className="h-4 w-4 text-indigo-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
+                              <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                            </svg>
+                          )}
+                        </button>
+                      ))}
+                    </div>
+                  </>
+                )}
+              </div>
+
               {/* Add Product Button */}
               <button
                 type="button"
                 onClick={() => setShowAddModal(true)}
-                className="inline-flex cursor-pointer shrink-0 items-center justify-center gap-2 rounded-full bg-gradient-to-r from-indigo-600 to-blue-600 px-5 py-2 text-[18px] font-semibold text-white shadow-md shadow-indigo-600/20 transition-all hover:from-indigo-500 hover:to-blue-500 active:scale-[0.98]"
+                className="inline-flex cursor-pointer shrink-0 items-center justify-center gap-2 rounded-full bg-gradient-to-r from-indigo-600 to-blue-600 px-5 py-2.5 text-[18px] font-semibold text-white shadow-md shadow-indigo-600/20 transition-all hover:from-indigo-500 hover:to-blue-500 active:scale-[0.98]"
               >
                 <svg
                   className="h-5 w-5"

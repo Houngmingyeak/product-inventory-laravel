@@ -5,28 +5,28 @@ function ProductTable({ products, onView, onEdit, onDelete }) {
         <table className="w-full text-left text-[18px]">
           <thead className="sticky top-0 z-10 bg-slate-100/95 shadow-2xs backdrop-blur-md font-semibold text-slate-700">
             <tr>
-              <th scope="col" className="w-[14%] px-3 py-2.5 whitespace-nowrap">
+              <th scope="col" className="w-[14%] px-3.5 py-3 whitespace-nowrap">
                 SKU
               </th>
-              <th scope="col" className="w-[24%] px-3 py-2.5 whitespace-nowrap">
+              <th scope="col" className="w-[24%] px-3.5 py-3 whitespace-nowrap">
                 Product Name
               </th>
-              <th scope="col" className="w-[15%] px-3 py-2.5 whitespace-nowrap">
+              <th scope="col" className="w-[15%] px-3.5 py-3 whitespace-nowrap">
                 Category
               </th>
-              <th scope="col" className="w-[11%] px-3 py-2.5 whitespace-nowrap">
+              <th scope="col" className="w-[11%] px-3.5 py-3 whitespace-nowrap">
                 Unit Price
               </th>
-              <th scope="col" className="w-[8%] px-2 py-2.5 text-center whitespace-nowrap">
+              <th scope="col" className="w-[8%] px-2.5 py-3 text-center whitespace-nowrap">
                 Stock
               </th>
-              <th scope="col" className="w-[12%] px-3 py-2.5 whitespace-nowrap">
+              <th scope="col" className="w-[12%] px-3.5 py-3 whitespace-nowrap">
                 Total Value
               </th>
-              <th scope="col" className="w-[10%] px-2.5 py-2.5 whitespace-nowrap">
+              <th scope="col" className="w-[10%] px-3 py-3 whitespace-nowrap">
                 Status
               </th>
-              <th scope="col" className="w-[6%] px-3 py-2.5 text-right whitespace-nowrap">
+              <th scope="col" className="w-[6%] px-3.5 py-3 text-right whitespace-nowrap">
                 Actions
               </th>
             </tr>
@@ -72,28 +72,28 @@ function ProductTable({ products, onView, onEdit, onDelete }) {
                     className="transition-colors duration-100 hover:bg-indigo-50/40"
                   >
                     {/* SKU */}
-                    <td className="px-3 py-2 whitespace-nowrap">
-                      <span className="inline-block rounded-lg border border-slate-200 bg-slate-100/90 px-2 py-0.5 font-mono text-[18px] font-semibold text-slate-800 shadow-2xs">
+                    <td className="px-3.5 py-3.5 whitespace-nowrap">
+                      <span className="inline-block rounded-lg border border-slate-200 bg-slate-100/90 px-2.5 py-1 font-mono text-[18px] font-semibold text-slate-800 shadow-2xs">
                         {product.sku}
                       </span>
                     </td>
 
                     {/* Name */}
-                    <td className="px-3 py-2 font-bold text-slate-900">
+                    <td className="px-3.5 py-3.5 font-bold text-slate-900">
                       <span className="block truncate" title={product.name}>
                         {product.name}
                       </span>
                     </td>
 
                     {/* Category */}
-                    <td className="px-3 py-2 whitespace-nowrap">
-                      <span className="inline-block rounded-lg border border-slate-200/80 bg-slate-50 px-2.5 py-0.5 text-[18px] font-medium text-slate-700">
+                    <td className="px-3.5 py-3.5 whitespace-nowrap">
+                      <span className="inline-block rounded-xl border border-slate-200/80 bg-slate-50 px-3 py-1 text-[18px] font-medium text-slate-700 shadow-2xs">
                         {product.category}
                       </span>
                     </td>
 
                     {/* Unit Price */}
-                    <td className="px-3 py-2 font-semibold text-slate-800 whitespace-nowrap">
+                    <td className="px-3.5 py-3.5 font-semibold text-slate-800 whitespace-nowrap">
                       {new Intl.NumberFormat('en-US', {
                         style: 'currency',
                         currency: 'USD',
@@ -101,14 +101,14 @@ function ProductTable({ products, onView, onEdit, onDelete }) {
                     </td>
 
                     {/* Stock Qty */}
-                    <td className="px-2 py-2 text-center whitespace-nowrap">
-                      <span className="inline-block min-w-8 rounded-lg border border-slate-200 bg-slate-50 px-2 py-0.5 font-bold text-slate-800">
+                    <td className="px-2.5 py-3.5 text-center whitespace-nowrap">
+                      <span className="inline-block min-w-9 rounded-lg border border-slate-200 bg-slate-50 px-2.5 py-1 font-bold text-slate-800">
                         {product.stock}
                       </span>
                     </td>
 
                     {/* Total Value */}
-                    <td className="px-3 py-2 font-black text-indigo-700 whitespace-nowrap">
+                    <td className="px-3.5 py-3.5 font-black text-indigo-700 whitespace-nowrap">
                       {new Intl.NumberFormat('en-US', {
                         style: 'currency',
                         currency: 'USD',
@@ -116,10 +116,10 @@ function ProductTable({ products, onView, onEdit, onDelete }) {
                     </td>
 
                     {/* Status */}
-                    <td className="px-2.5 py-2 whitespace-nowrap">
+                    <td className="px-3 py-3.5 whitespace-nowrap">
                       <span
                         className={
-                          'inline-flex items-center gap-1.5 rounded-full border px-2.5 py-0.5 text-[18px] font-semibold shadow-2xs ' +
+                          'inline-flex items-center gap-1.5 rounded-full border px-3 py-1 text-[18px] font-semibold shadow-2xs ' +
                           badgeClass
                         }
                       >
@@ -129,7 +129,7 @@ function ProductTable({ products, onView, onEdit, onDelete }) {
                     </td>
 
                     {/* Actions */}
-                    <td className="px-3 py-2 text-right whitespace-nowrap">
+                    <td className="px-3.5 py-3.5 text-right whitespace-nowrap">
                       <div className="flex items-center justify-end gap-1">
                         {/* View Action */}
                         <button
