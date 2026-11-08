@@ -15,4 +15,21 @@ class ProductController extends Controller
 
         return response()->json($products);
     }
+
+    // POST /api/products
+    // បន្ថែមផលិតផលថ្មី ជាមួយ Validation
+    public function store(Request $request)
+    {
+        $validated = $request->validate([
+            'sku'      => ['required', 'string', 'max:32', 'unique:products,sku'],
+            'name'     => ['required', 'string', 'max:255'],
+            'category' => ['required', 'string', 'max:50'],
+            'price'    => ['required', 'numeric', 'gt:0', 'max:99999999.99'],
+            'stock'    => ['required', 'integer', 'min:0', 'max:2147483647'],
+        ]);
+
+        $product = Product::create($validated);
+
+        return response()->json($product, 201);
+    }
 }
