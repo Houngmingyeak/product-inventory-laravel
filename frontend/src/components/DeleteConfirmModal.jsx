@@ -32,11 +32,11 @@ function DeleteConfirmModal({ product, onCancel, onDeleted }) {
   }
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center overflow-y-auto bg-slate-950/45 p-4 backdrop-blur-md">
-      <div className="w-full max-w-md rounded-3xl border border-slate-200/90 bg-white/95 p-6 shadow-2xl backdrop-blur-2xl sm:p-8">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/45 p-3 sm:p-4 backdrop-blur-md">
+      <div className="w-full max-w-md rounded-3xl border border-slate-200/90 bg-white/95 p-6 shadow-2xl backdrop-blur-2xl sm:p-7">
         {/* Warning Icon Badge */}
-        <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-rose-100 text-rose-600 ring-1 ring-rose-500/20">
-          <svg className="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+        <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-2xl bg-rose-100 text-rose-600 ring-1 ring-rose-500/20">
+          <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
             <path
               strokeLinecap="round"
               strokeLinejoin="round"
@@ -47,7 +47,7 @@ function DeleteConfirmModal({ product, onCancel, onDeleted }) {
 
         <h2 className="text-2xl font-black tracking-tight text-slate-900">Delete Product?</h2>
 
-        <p className="mt-3 text-[18px] leading-relaxed text-slate-600">
+        <p className="mt-2.5 text-[18px] leading-relaxed text-slate-600">
           Are you sure you want to permanently delete{' '}
           <span className="font-bold text-slate-900">{product.name}</span>{' '}
           (<span className="rounded-md border border-slate-200 bg-slate-100 px-1.5 py-0.5 font-mono text-[18px] text-slate-800">{product.sku}</span>)?
@@ -55,7 +55,7 @@ function DeleteConfirmModal({ product, onCancel, onDeleted }) {
         </p>
 
         {error && (
-          <div className="mt-4 flex items-start gap-2.5 rounded-2xl border border-rose-200 bg-rose-50 p-4 text-[18px] font-medium text-rose-700">
+          <div className="mt-3.5 flex items-start gap-2.5 rounded-2xl border border-rose-200 bg-rose-50 p-3.5 text-[18px] font-medium text-rose-700">
             <svg className="mt-0.5 h-5 w-5 shrink-0 text-rose-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
               <path strokeLinecap="round" strokeLinejoin="round" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
@@ -63,11 +63,11 @@ function DeleteConfirmModal({ product, onCancel, onDeleted }) {
           </div>
         )}
 
-        <div className="mt-8 flex flex-col-reverse justify-end gap-3 sm:flex-row">
+        <div className="mt-6 flex flex-col-reverse justify-end gap-3 sm:flex-row">
           <button
             type="button"
             onClick={onCancel}
-            className="cursor-pointer rounded-2xl border border-slate-200 bg-white px-6 py-3 text-[18px] font-semibold text-slate-700 shadow-2xs transition-all hover:bg-slate-50 active:scale-[0.98]"
+            className="cursor-pointer rounded-full border border-slate-200 bg-white px-5 py-2 text-[18px] font-semibold text-slate-700 shadow-2xs transition-all hover:bg-slate-50 active:scale-[0.98]"
           >
             Cancel
           </button>
@@ -75,7 +75,7 @@ function DeleteConfirmModal({ product, onCancel, onDeleted }) {
             type="button"
             onClick={handleDelete}
             disabled={deleting}
-            className="inline-flex cursor-pointer items-center justify-center gap-2 rounded-2xl bg-rose-600 px-7 py-3 text-[18px] font-bold text-white shadow-lg shadow-rose-600/25 transition-all hover:bg-rose-500 disabled:cursor-not-allowed disabled:opacity-60 active:scale-[0.98]"
+            className="inline-flex cursor-pointer items-center justify-center gap-2 rounded-full bg-rose-600 px-6 py-2 text-[18px] font-bold text-white shadow-md shadow-rose-600/25 transition-all hover:bg-rose-500 disabled:cursor-not-allowed disabled:opacity-60 active:scale-[0.98]"
           >
             {deleting ? (
               <>
