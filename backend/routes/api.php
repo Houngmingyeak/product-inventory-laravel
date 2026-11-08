@@ -15,3 +15,6 @@ Route::get('/ping', function () {
 
 // ទាញបញ្ជីផលិតផល
 Route::get('/products', [ProductController::class, 'index']);
+
+// បន្ថែមផលិតផលថ្មី
+Route::post('/products', [ProductController::class, 'store']);
