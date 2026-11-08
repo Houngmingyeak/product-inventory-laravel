@@ -24,3 +24,6 @@ Route::get('/products/{product}', [ProductController::class, 'show']);
 
 // កែផលិតផល
 Route::put('/products/{product}', [ProductController::class, 'update']);
+
+// លុបផលិតផល
+Route::delete('/products/{product}', [ProductController::class, 'destroy']);
