@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 
@@ -11,3 +12,6 @@ Route::get('/ping', function () {
         'driver'   => DB::connection()->getDriverName(),
     ]);
 });
+
+// ទាញបញ្ជីផលិតផល
+Route::get('/products', [ProductController::class, 'index']);
