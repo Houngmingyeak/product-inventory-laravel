@@ -112,4 +112,15 @@ class ProductController extends Controller
 
         return response()->json($product);
     }
+
+        // DELETE /api/products/{product}
+    // លុបផលិតផលចេញពី Database ជាអចិន្ត្រៃយ៍
+    public function destroy(Product $product)
+    {
+        $product->delete();
+
+        return response()->json([
+            'message' => 'Product deleted successfully.',
+        ]);
+    }
 }
