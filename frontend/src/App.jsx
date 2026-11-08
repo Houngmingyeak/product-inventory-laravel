@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import ProductTable from './components/ProductTable'
+import SummaryCards from './components/SummaryCards'
 
 function App() {
   const [products, setProducts] = useState([])
@@ -54,12 +55,16 @@ function App() {
         )}
 
         {!loading && !error && (
-          <ProductTable
-            products={products}
-            onView={() => {}}
-            onEdit={() => {}}
-            onDelete={() => {}}
-          />
+          <>
+            <SummaryCards products={products} />
+
+            <ProductTable
+              products={products}
+              onView={() => {}}
+              onEdit={() => {}}
+              onDelete={() => {}}
+            />
+          </>
         )}
       </div>
     </div>
