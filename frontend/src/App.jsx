@@ -2,13 +2,21 @@ import { useEffect, useState } from 'react'
 import ProductTable from './components/ProductTable'
 import SummaryCards from './components/SummaryCards'
 import AddProductModal from './components/AddProductModal'
+import EditProductModal from './components/EditProductModal'
+import DeleteConfirmModal from './components/DeleteConfirmModal'
+import ViewProductModal from './components/ViewProductModal'
 
 function App() {
   const [products, setProducts] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
   const [search, setSearch] = useState('')
+
+  // Modals៖ null មានន័យថាបិទ, មាន product មានន័យថាបើក
   const [showAddModal, setShowAddModal] = useState(false)
+  const [viewingProduct, setViewingProduct] = useState(null)
+  const [editingProduct, setEditingProduct] = useState(null)
+  const [deletingProduct, setDeletingProduct] = useState(null)
 
   // ទាញបញ្ជីផលិតផលពី Laravel
   async function loadProducts() {
@@ -40,9 +48,20 @@ function App() {
     loadProducts()
   }, [])
 
-  // ក្រោយបន្ថែមជោគជ័យ៖ បិទ modal ហើយទាញបញ្ជីថ្មី (កាតនឹងប្តូរភ្លាម)
+  // ក្រោយ Add/Edit/Delete ជោគជ័យ៖ បិទ modal ហើយទាញបញ្ជីថ្មីពី Database
+  // ដូច្នេះតារាង និងកាតទាំង ៤ ប្តូរភ្លាមៗ
   function handleAdded() {
     setShowAddModal(false)
+    loadProducts()
+  }
+
+  function handleEdited() {
+    setEditingProduct(null)
+    loadProducts()
+  }
+
+  function handleDeleted() {
+    setDeletingProduct(null)
     loadProducts()
   }
 
@@ -76,6 +95,7 @@ function App() {
 
         {!loading && !error && (
           <>
+            {/* កាតគណនាពីផលិតផលទាំងអស់ (មិនប្តូរពេល Search) */}
             <SummaryCards products={products} />
 
             <div className="mb-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
@@ -98,9 +118,9 @@ function App() {
 
             <ProductTable
               products={filteredProducts}
-              onView={() => {}}
-              onEdit={() => {}}
-              onDelete={() => {}}
+              onView={(product) => setViewingProduct(product)}
+              onEdit={(product) => setEditingProduct(product)}
+              onDelete={(product) => setDeletingProduct(product)}
             />
           </>
         )}
@@ -109,6 +129,30 @@ function App() {
           <AddProductModal
             onClose={() => setShowAddModal(false)}
             onSaved={handleAdded}
+          />
+        )}
+
+        {viewingProduct && (
+          <ViewProductModal
+            product={viewingProduct}
+            onClose={() => setViewingProduct(null)}
+          />
+        )}
+
+        {editingProduct && (
+          <EditProductModal
+            key={editingProduct.id}
+            product={editingProduct}
+            onClose={() => setEditingProduct(null)}
+            onSaved={handleEdited}
+          />
+        )}
+
+        {deletingProduct && (
+          <DeleteConfirmModal
+            product={deletingProduct}
+            onCancel={() => setDeletingProduct(null)}
+            onDeleted={handleDeleted}
           />
         )}
       </div>
